@@ -1,0 +1,118 @@
+basePath: /
+definitions:
+  contract.ContractInfoResponse:
+    properties:
+      address:
+        type: string
+      blockTag:
+        type: string
+      bytecodePreview:
+        type: string
+      bytecodeSize:
+        type: integer
+      hasCode:
+        type: boolean
+      network:
+        type: string
+    type: object
+  contract.ERC20MetadataResponse:
+    properties:
+      address:
+        type: string
+      blockTag:
+        type: string
+      decimals:
+        type: integer
+      name:
+        type: string
+      network:
+        type: string
+      symbol:
+        type: string
+      totalSupply:
+        type: string
+    type: object
+  contract.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Demo API to fetch Ethereum smart-contract info and ERC20 metadata using
+    Infura
+  title: eth-contract-info-api Contract API
+  version: "1.0"
+paths:
+  /api/v1/contracts/erc20:
+    get:
+      consumes:
+      - application/json
+      description: Fetch ERC20 name, symbol, decimals, and totalSupply using eth_call
+        via Infura. Requires an ERC20 contract address.
+      parameters:
+      - description: ERC20 contract address
+        in: query
+        name: address
+        required: true
+        type: string
+      - default: latest
+        description: Block tag
+        in: query
+        name: blockTag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/contract.ERC20MetadataResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/contract.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/contract.ErrorResponse'
+      summary: Get ERC20 token metadata
+      tags:
+      - contracts
+  /api/v1/contracts/info:
+    get:
+      consumes:
+      - application/json
+      description: Fetch deployed bytecode information for an Ethereum address using
+        Infura. Contract address recommended; wallet address returns no code.
+      parameters:
+      - description: Ethereum address (contract address recommended)
+        in: query
+        name: address
+        required: true
+        type: string
+      - default: latest
+        description: Block tag
+        in: query
+        name: blockTag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/contract.ContractInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/contract.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/contract.ErrorResponse'
+      summary: Get smart contract info
+      tags:
+      - contracts
+swagger: "2.0"
