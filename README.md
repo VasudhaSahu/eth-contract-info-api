@@ -34,13 +34,13 @@ eth-contract-info-api/
 │   │       └── client.go        # JSON-RPC client for Infura implementing the Reader interface
 │   ├── domain/
 │   │   └── contract/
-│   │       ├── entity.go        # Domain entities: Address, Info, ERC20Metadata
-│   │       ├── rules.go         # Domain rules: address normalization, bytecode helpers, selectors
+│   │       ├── model.go         # Domain entities: Address, Info, ERC20Metadata
+│   │       ├── validation.go    # Domain rules: address normalization, bytecode helpers, selectors
 │   │       └── decode.go        # Minimal ABI decoding helpers for ERC-20 fields
 │   ├── application/
 │   │   └── contract/
-│   │       ├── usecase.go       # UseCase orchestrates Reader calls and applies domain rules
-│   │       └── dto.go           # Input and output DTOs for contract info and ERC-20 metadata
+│   │       ├── service.go       # Service orchestrates Reader calls and applies domain rules
+│   │       └── types.go         # Input and output DTOs for contract info and ERC-20 metadata
 │   └── interfaces/
 │       └── http/
 │           └── contract_handler.go  # Gin handlers, HTTP/JSON layer, Swagger annotations
